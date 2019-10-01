@@ -24,6 +24,7 @@ def writeToFile(file, data):
 		current_file.write(json.dumps(data))
 
 def writer(topic, data = 0, init_description = ""):
+	from writer import writeToFile
 	def isint(s):
 		try:
 			int(s)
@@ -62,7 +63,7 @@ def writer(topic, data = 0, init_description = ""):
 
 	content = ""
 	summary = init_description
-	print(topic + ".write\n" + summary)
+	print(topic + ".write: " + summary)
 	
 	
 	while content != "end":

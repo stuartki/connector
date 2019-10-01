@@ -34,11 +34,21 @@ def ngram(phrase, n):
 		output.append(f)
 	return output
 
-def get(data):
+def get(data, DG):
+	from projecter import print_graph
 	id = input("id: ")
+	
 	try:
 		id = int(id)
-		data[id].printNode()
+		print()
+		print(data[id].description)
+		s = set([data[id]])
+		for n in data[id].future:
+			s.add(data[n])
+		for n in data[id].past:
+			s.add(data[n])
+		
+		print_graph(DG.subgraph(list(s)), unique=True)
 	except:
 		print("NOT INT")
 		
@@ -52,7 +62,7 @@ def isCycle(DG):
 		print("NO CYCLES")
 
 #search generically if the word is in data (type list) 
-def searcher(word, data):
+def searcher(word, data, index = False):
 	def ngram(phrase, n):
 		phrase = phrase.split(' ')
 		output = []
@@ -72,12 +82,18 @@ def searcher(word, data):
 		if isinstance(item, Node):
 			for w in ngram(item.title, n):
 				if word in w.lower():
-					returnArray.append(item)
+					if index:
+						returnArray.append(data.index(item))
+					else:
+						returnArray.append(item)
 					break
 		elif isinstance(item, str):
 			for w in ngram(item, n):
 				if word in w.lower():
-					returnArray.append(item)
+					if index:
+						returnArray.append(data.index(item))
+					else:
+						returnArray.append(item)
 					break
 			
 			

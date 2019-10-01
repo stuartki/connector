@@ -1,0 +1,197 @@
+6.2 The Law of Large Numbers
+The average of a random sample of i.i.d. random variables is called their sample
+mean. The sample mean is useful for summarizing the information in a random
+sample in much the same way that the mean of a probability distribution summarizes
+the information in the distribution. In this section, we present some results
+that illustrate the connection between the sample mean and the expected value of
+the individual random variables that comprise the random sample.
+The Markov and Chebyshev Inequalities
+We shall begin this section by presenting two simple and general results, known
+as the Markov inequality and the Chebyshev inequality. We shall then apply these
+inequalities to random samples.
+6.2 The Law of Large Numbers 349
+The Markov inequality is related to the claim made on page 211 about how the
+mean of a distribution can be affected by moving a small amount of probability to an
+arbitrarily large value. The Markov inequality puts a bound on how much probability
+can be at arbitrarily large values once the mean is specified.
+Theorem
+6.2.1
+Markov Inequality. Suppose thatX is a random variable such that Pr(X ≥ 0) = 1. Then
+for every real number t > 0,
+Pr(X ≥ t) ≤ E(X)
+t
+. (6.2.1)
+Proof For convenience, we shall assume that X has a discrete distribution for which
+the p.f. is f . The proof for a continuous distribution or a more general type of
+distribution is similar. For a discrete distribution,
+E(X) =
+
+x
+xf (x) =
+
+x<t
+xf (x) +
+
+x≥t
+xf (x).
+Since X can have only nonnegative values, all the terms in the summations are
+nonnegative. Therefore,
+E(X) ≥
+
+x≥t
+xf (x) ≥
+
+x≥t
+tf (x) = t Pr(X ≥ t). (6.2.2)
+Divide the extreme ends of (6.2.2) by t > 0 to obtain (6.2.1).
+The Markov inequality is primarily of interest for large values of t . In fact, when
+t ≤ E(X), the inequality is of no interest whatsoever, since it is known that Pr(X ≤
+t) ≤ 1. However, it is found from the Markov inequality that for every nonnegative
+random variable X whose mean is 1, the maximum possible value of Pr(X ≥ 100) is
+0.01. Furthermore, it can be verified that this maximum value is actually attained by
+every random variable X for which Pr(X = 0) = 0.99 and Pr(X = 100) = 0.01.
+The Chebyshev inequality is related to the idea that the variance of a random
+variable is a measure of how spread out its distribution is. The inequality says that the
+probability that X is far away from its mean is bounded by a quantity that increases
+as Var(X) increases.
+Theorem
+6.2.2
+Chebyshev Inequality. Let X be a random variable for which Var(X) exists. Then for
+every number t > 0,
+Pr(|X − E(X)| ≥ t) ≤ Var(X)
+t2
+. (6.2.3)
+Proof Let Y = [X − E(X)]2. Then Pr(Y ≥ 0) = 1 and E(Y) = Var(X). By applying
+the Markov inequality to Y , we obtain the following result:
+Pr(|X − E(X)| ≥ t) = Pr(Y ≥ t2) ≤ Var(X)
+t2
+.
+It can be seen from this proof that the Chebyshev inequality is simply a special
+case of the Markov inequality. Therefore, the comments that were given following
+the proof of the Markov inequality can be applied as well to the Chebyshev inequality.
+Because of their generality, these inequalities are very useful. For example, if
+Var(X) = σ2 and we let t = 3σ, then the Chebyshev inequality yields the result that
+Pr(|X − E(X)| ≥ 3σ) ≤ 1
+9
+.
+350 Chapter 6 Large Random Samples
+In words, the probability that any given random variable will differ from its mean by
+more than 3 standard deviations cannot exceed 1/9. This probability will actually be
+much smaller than 1/9 for many of the random variables and distributions that will
+be discussed in this book. The Chebyshev inequality is useful because of the fact that
+this probability must be 1/9 or less for every distribution. It can also be shown (see
+Exercise 4 at the end of this section) that the upper bound in (6.2.3) is sharp in the
+sense that it cannot be made any smaller and still hold for all distributions.
+Properties of the Sample Mean
+In Definition 5.6.3, we defined the sample mean of n random variables X1, . . . , Xn
+to be their average,
+Xn
+= 1
+n
+(X1 + . . . + Xn).
+The mean and the variance of Xn are easily computed.
+Theorem
+6.2.3
+Mean and Variance of the Sample Mean. Let X1, . . . , Xn be a random sample from
+a distribution with mean μ and variance σ2. Let Xn be the sample mean. Then
+E(Xn) = μ and Var(Xn) = σ2/n.
+Proof It follows from Theorems 4.2.1 and 4.2.4 that
+E(Xn) = 1
+n
+n
+i=1
+E(Xi) = 1
+n
+. nμ = μ.
+Furthermore, since X1, . . . , Xn are independent, Theorems 4.3.4 and 4.3.5 say that
+Var(Xn) = 1
+n2 Var
+
+n
+i=1
+Xi
+	
+= 1
+n2
+n
+i=1
+Var(Xi) = 1
+n2
+. nσ2 = σ2
+n
+.
+In words, the mean of Xn is equal to the mean of the distribution from which the
+random sample was drawn, but the variance of Xn is only 1/n times the variance
+of that distribution. It follows that the probability distribution of Xn will be more
+concentrated around the mean value μ than was the original distribution. In other
+words, the sample mean Xn is more likely to be close to μ than is the value of just a
+single observation Xi from the given distribution.
+These statements can be made more precise by applying the Chebyshev inequality
+to Xn. Since E(Xn) = μ and Var(Xn) = σ2/n, it follows from the relation (6.2.3)
+that for every number t > 0,
+Pr(|Xn
+− μ| ≥ t) ≤ σ2
+nt2
+. (6.2.4)
+Example
+6.2.1
+Determining the Required Number of Observations. Suppose that a random sample is
+to be taken from a distribution for which the value of the meanμis not known, but for
+which it is known that the standard deviation σ is 2 units or less.We shall determine
+how large the sample size must be in order to make the probability at least 0.99 that
+|Xn
+− μ| will be less than 1 unit.
+6.2 The Law of Large Numbers 351
+Since σ2 ≤ 22 = 4, it follows from the relation (6.2.4) that for every sample size n,
+Pr(|Xn
+− μ| ≥ 1) ≤ σ2
+n
+≤ 4
+n
+.
+Since n must be chosen so that Pr(|Xn
+− μ| < 1) ≥ 0.99, it follows that n must be
+chosen so that 4/n ≤ 0.01. Hence, it is required that n ≥ 400. 
+Example
+6.2.2
+A Simulation. An environmental engineer believes that there are two contaminants
+in a water supply, arsenic and lead. The actual concentrations of the two contaminants
+are independent random variables X and Y , measured in the same units. The
+engineer is interested in what proportion of the contamination is lead on average.
+That is, the engineer wants to know the mean of R = Y/(X + Y).We suppose that it
+is a simple matter to generate as many independent pseudo-random numbers with
+the distributions ofX and Y as we desire.Acommon way to obtain an approximation
+to E[Y/(X + Y)] would be the following: If we sample n pairs (X1, Y1), . . . , (Xn, Yn)
+and compute Ri
+= Yi/(Xi
++ Yi) for i = 1, . . . , n, then Rn
+= 1
+n
+n
+i=1 Ri is a sensible
+approximation to E(R). To decide how large n should be, we can argue as in Example
+6.2.1. Since it is known that |Ri
+| ≤ 1, it must be that Var(Ri) ≤ 1. (Actually,
+Var(Ri) ≤ 1/4, but this is harder to prove. See Exercise 14 in this section for a way to
+prove it in the discrete case.) According to Chebyshev’s inequality, for each  > 0,
+Pr
+
+|Rn
+− E(R)| ≥ 
+
+≤ 1
+n2
+.
+So, if we want |Rn
+− E(R)| ≤ 0.005 with probability 0.98 or more, then we should use
+n > 1/[0.2 × 0.0052]= 2,000,000. 
+It should be emphasized that the use of the Chebyshev inequality in Example
+6.2.1 guarantees that a sample for which n = 400 will be large enough to meet the
+specified probability requirements, regardless of the particular type of distribution
+from which the sample is to be taken. If further information about this distribution
+is available, then it can often be shown that a smaller value for n will be sufficient.
+This property is illustrated in the next example.
+Example
+6.2.3
+Tossing a Coin. Suppose that a fair coin is to be tossed n times independently. For
+i = 1, . . . , n, let Xi

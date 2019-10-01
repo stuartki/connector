@@ -14,25 +14,35 @@ from projecter import get_project, print_graph, branch
 
 
 
+
 def reload(data):
 	DG = init(data)
 	#clean graph initially
 	DG = cleanPred(data, DG)
 	return DG
 	
-def interface(topic = ""):
+def interface(init_topic = ""):
 	from mapper import reload
+	topic = ""
 	while topic != "end":
 		#loading topic
-		topic = input("topic: ")
-		
-		if topic == "end":
-			continue
-		if topic == "ls":
-			for n in [n.replace(".json", "") for n in os.listdir("../data/") if ".json" in n]:
-				print(n)
-			continue
+		if init_topic == "":
+			topic = input("topic: ")
+			
+			if topic == "end":
+				continue
+			if topic == "ls":
+				for n in [n.replace(".json", "") for n in os.listdir("../data/") if ".json" in n]:
+					print(n)
+				continue
+			if len(searcher(topic, list(os.listdir("../data/")))) > 0:
+				print()
+				for n in [n.replace(".json", "") for n in searcher(topic, list(os.listdir("../data/"))) if ".json" in n]:
+					print(n)
+		else:
+			topic = init_topic
 		file = "../data/" + topic + ".json"
+
 		if topic + ".json" not in set(os.listdir("../data/")):
 			print("NEW")
 			conf = input("confirm: ")
@@ -48,6 +58,8 @@ def interface(topic = ""):
 		DG = reload(data)
 		#for the purpose of recording changes to length of dataset
 		preLen = len(data)
+		path = ""
+		walker = 0
 
 		#actions
 		while start != "end":
@@ -139,7 +151,7 @@ def interface(topic = ""):
 					plt.show()
 
 			if start == "get":
-				get(data)
+				get(data, DG)
 
 			if start == "cycle":
 				isCycle(DG)
@@ -153,6 +165,37 @@ def interface(topic = ""):
 			if start == "pyvis":
 				from net_vis import net_vis
 				net_vis(data)
+			
+			if start == "load":
+				from load import file_finder, term_text_editor, pdf_loader, txt_loader
+				if len(path) > 0:
+					s = input("LOADED PATH: " + path + "\n")
+					if s == "new":
+						path = file_finder()
+						if ".txt" in path:
+							t_data = txt_loader(path)
+						elif ".pdf" in path:
+							t_data = pdf_loader(path)
+						else:
+							print("NO VALID FILE")
+						term_text_editor(path, from_topic = topic)
+						data = reader(topic)
+						DG = reload(data)
+					else:
+						walker = term_text_editor(t_data , init_index = walker, from_topic= topic)
+						data = reader(topic)
+						DG = reload(data)
+				else:
+					path = file_finder()
+					if ".txt" in path:
+						t_data = txt_loader(path)
+					elif ".pdf" in path:
+						t_data = pdf_loader(path)
+					else:
+						print("NO VALID FILE")
+					walker = term_text_editor(t_data, from_topic = topic)
+					data = reader(topic)
+					DG = reload(data)
 
 if __name__ == "__main__":
 	interface()
