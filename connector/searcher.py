@@ -34,9 +34,10 @@ def ngram(phrase, n):
 		output.append(f)
 	return output
 
-def get(data, DG):
+def get(data, DG, id = -1):
 	from projecter import print_graph
-	id = input("id: ")
+	if id < 0:
+		id = input("id: ")
 	
 	try:
 		id = int(id)

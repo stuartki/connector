@@ -12,8 +12,13 @@ from edit import edit
 from searcher import searcher
 import json
 from network import mostPopularSuc, mostPopularPred, init,	draw_all, cleanPred, most_degree_centrality, labeler
-from projecter import get_project, print_graph
-
+from projecter import get_project, print_graph, branch
+def isint(s):
+	try:
+		int(s)
+		return True
+	except ValueError:
+		return False
 
 def writeToFile(file, data):
 	open(file, "w").close()
@@ -24,13 +29,8 @@ def writeToFile(file, data):
 		current_file.write(json.dumps(data))
 
 def writer(topic, data = 0, init_description = ""):
-	from writer import writeToFile
-	def isint(s):
-		try:
-			int(s)
-			return True
-		except ValueError:
-			return False
+	from writer import writeToFile, isint
+
 	
 	#cleaning function making sure each node is properly linked
 	def clean(data, curNode):
@@ -77,7 +77,7 @@ def writer(topic, data = 0, init_description = ""):
 			continue
 		#enter
 		if content == "\n":
-			summary += "/"
+			summary += "\n"
 			continue
 		#premature break
 		if content == "break":
@@ -136,6 +136,8 @@ def writer(topic, data = 0, init_description = ""):
 			continue
 		if past_temp == "project":
 			get_project(data, DG)
+		if past_temp == "branch":
+			branch(data, DG)
 		if isint(past_temp):
 			result = int(past_temp)
 			back.append(result)

@@ -3,7 +3,7 @@ import sys
 from Node import Node
 from reader import reader
 from searcher import searcher, get, isCycle
-from writer import writer
+from writer import writer, isint
 from edit import edit
 from writer import writeToFile
 from network import mostPopularSuc, mostPopularPred, init, draw_all, cleanPred, most_degree_centrality, labeler
@@ -98,7 +98,10 @@ def interface(init_topic = ""):
 					se = input("search: ")
 					for n in searcher(se, data):
 						print(str(n.id) + ": " + n.title)
-						
+
+			if isint(start):
+				get(data, DG, id = int(start))
+
 			if start == "ls":
 				for n in data:
 					if isinstance(n, int):

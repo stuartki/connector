@@ -2,7 +2,7 @@ def file_finder():
     from searcher import searcher
     import os
 
-    SUPPORTED_FILE_TYPES = ['.pdf']
+    SUPPORTED_FILE_TYPES = ['.pdf', '.txt']
     w = ""
     path = os.getcwd()
     def reload_dir(path):
@@ -36,17 +36,18 @@ def file_finder():
             cur_directory = [n for n in cur_directory if file_type in n.name]
             aprint(cur_directory)
             continue
+
+        if "cd .." == w or ".." == w:
+            arr = path.split('/')
+            if len(arr) > 1:
+                path = "/".join(arr[:-1])
+                print(path)
+                cur_directory = reload_dir(path)
+                aprint(cur_directory)
+            else:
+                aprint(cur_directory)
+            continue
         if "cd" in w:
-            if "cd .." == w:
-                arr = path.split('/')
-                if len(arr) > 1:
-                    path = "/".join(arr[:-1])
-                    print(path)
-                    cur_directory = reload_dir(path)
-                    aprint(cur_directory)
-                else:
-                    aprint(cur_directory)
-                continue
 
             if w[3:] in [n.name for n in cur_directory]:
                 path += "/"+w[3:]
@@ -92,7 +93,11 @@ def pdf_loader(path):
 
 def txt_loader(path):
     with open(path, 'r') as cur_file:
-        data = str(cur_file.read()).replace('\n', ' ').split('. ')
+        data = str(cur_file.read()).replace('\n', ' ')
+    import nltk
+
+    tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
+    data = [n[:-1] for n in tokenizer.tokenize(data)]
     return data
 
 def term_text_editor(data, init_index = 0, from_topic = ""):
@@ -111,7 +116,7 @@ def term_text_editor(data, init_index = 0, from_topic = ""):
         input()
 
 
-    while i != "end" or walker < 0 or walker >= len(data):
+    while i != "end" or (walker > 0 and walker < len(data)):
         cur_sentence = str(data[walker])
         i = input(cur_sentence + '.' + '\n')
         if i == "end":
