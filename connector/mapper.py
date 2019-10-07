@@ -2,7 +2,7 @@ import os
 import sys
 from Node import Node
 from reader import reader
-from searcher import searcher, get, isCycle
+from searcher import searcher, get, isCycle, ls
 from writer import writer, isint
 from edit import edit
 from writer import writeToFile
@@ -60,7 +60,7 @@ def interface(init_topic = ""):
 		preLen = len(data)
 		path = ""
 		walker = 0
-
+		SET_OF_COMMANDS = ["end", "print", "edit", "write", "search"]
 		#actions
 		while start != "end":
 			start = input(topic + ": ")
@@ -102,11 +102,9 @@ def interface(init_topic = ""):
 			if isint(start):
 				get(data, DG, id = int(start))
 
-			if start == "ls":
-				for n in data:
-					if isinstance(n, int):
-						continue
-					print(str(n.id) + ": " + str(n.title))
+			if start[:2] == "ls":
+				ls(start, data)
+				continue
 				
 			if start == "graph":
 				draw_all(data, DG)

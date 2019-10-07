@@ -156,7 +156,7 @@ def get_project(data, DG, unique = False):
 			for n in dict.keys():
 				if len(dict[n].nodes()) != 0:
 					print_graph(dict[n])
-					total_set.union([n for n in dict[n].nodes()])
+					total_set = total_set.union([n for n in dict[n].nodes()])
 		pl = input("plot: ")
 		if pl == "y" or pl == "yes":
 			nx.draw(DG.subgraph(total_set))
@@ -236,4 +236,5 @@ if __name__ == "__main__":
 	from network import init
 	data = reader(topic)
 	DG = init(data)
+	get_project(data,DG)
 	print("COUNT = "+ str(branch(data,DG)))

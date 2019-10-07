@@ -22,6 +22,16 @@ import networkx as nx
 # 			pastNodes.append(x.id)
 # 	return pastNodes
 
+def ls(i, data):
+	try:
+		l = int(i[2:])
+	except:
+		l = len(data)
+	for n in range(len(data)-l, len(data)):
+		if isinstance(data[n], int):
+			continue
+		print(str(data[n].id) + ": " + str(data[n].title))
+
 def ngram(phrase, n):
 	phrase = phrase.split(' ')
 	output = []

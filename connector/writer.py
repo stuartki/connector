@@ -9,7 +9,7 @@ import sys
 from Node import Node
 from reader import reader
 from edit import edit
-from searcher import searcher
+from searcher import searcher, ls
 import json
 from network import mostPopularSuc, mostPopularPred, init,	draw_all, cleanPred, most_degree_centrality, labeler
 from projecter import get_project, print_graph, branch
@@ -113,14 +113,7 @@ def writer(topic, data = 0, init_description = ""):
 		if past_temp == "end":
 			continue
 		if past_temp[:2] == "ls":
-			try:
-				l = int(past_temp[2:])
-			except:
-				l = len(data)
-			for n in range(len(data)-l, len(data)):
-				if isinstance(data[n], int):
-					continue
-				print(str(data[n].id) + ": " + str(data[n].title))
+			ls(past_temp, data)
 			continue
 		if past_temp == "suc":
 			for n in mostPopularSuc(data, DG, limit = 10):

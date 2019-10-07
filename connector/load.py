@@ -1,4 +1,7 @@
-def file_finder():
+#loader will be put into editor
+#parser is straight to json format
+
+ef file_finder():
     from searcher import searcher
     import os
 
@@ -194,7 +197,8 @@ def term_text_editor(data, init_index = 0, from_topic = ""):
     #                     writer(from_topic, init_description = return_string)
     #                 continue
             
-
+def code_parser(path):
+    pass
 
 
 
