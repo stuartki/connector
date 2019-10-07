@@ -117,7 +117,7 @@ def writer(topic, data = 0, init_description = ""):
 				l = int(past_temp[2:])
 			except:
 				l = len(data)
-			for n in range(l):
+			for n in range(len(data)-l, len(data)):
 				if isinstance(data[n], int):
 					continue
 				print(str(data[n].id) + ": " + str(data[n].title))
