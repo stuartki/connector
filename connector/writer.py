@@ -9,7 +9,7 @@ import sys
 from Node import Node
 from reader import reader
 from edit import edit
-from searcher import searcher, ls
+from searcher import searcher, ls, get
 import json
 from network import mostPopularSuc, mostPopularPred, init,	draw_all, cleanPred, most_degree_centrality, labeler
 from projecter import get_project, print_graph, branch
@@ -131,6 +131,8 @@ def writer(topic, data = 0, init_description = ""):
 			get_project(data, DG)
 		if past_temp == "branch":
 			branch(data, DG)
+		if past_temp == "get":
+			get(data, DG)
 		if isint(past_temp):
 			result = int(past_temp)
 			back.append(result)
@@ -166,6 +168,8 @@ def writer(topic, data = 0, init_description = ""):
 		if future_temp == "cen":
 			for n in most_degree_centrality(DG, limit = 10):
 				print(str(n[0].id) + ": " + n[0].title)
+		if future_temp == "get":
+			get(data, DG)
 		if isint(future_temp):
 			result = int(future_temp)
 			future.append(result)
