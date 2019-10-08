@@ -93,9 +93,11 @@ def interface(init_topic = ""):
 			if start == "search":
 				se = ""
 				while se != "end":
+					se = input("search: ")
 					if se == "end":
 						continue
-					se = input("search: ")
+					if isint(se):
+						get(data, DG, id = int(se))
 					for n in searcher(se, data):
 						print(str(n.id) + ": " + n.title)
 
