@@ -51,7 +51,6 @@ def get(data, DG, id = -1):
 	
 	try:
 		id = int(id)
-		print()
 		print(data[id].description)
 		s = set([data[id]])
 		for n in data[id].future:
