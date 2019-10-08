@@ -1,7 +1,7 @@
 #loader will be put into editor
 #parser is straight to json format
 
-ef file_finder():
+def file_finder():
     from searcher import searcher
     import os
 
