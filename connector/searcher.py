@@ -23,9 +23,11 @@ import networkx as nx
 # 	return pastNodes
 
 def ls(i, data):
-	try:
+	try: 
 		l = int(i[2:])
 	except:
+		l = int(len(data)/10)
+	if l > len(data):
 		l = len(data)
 	for n in range(len(data)-l, len(data)):
 		if isinstance(data[n], int):
