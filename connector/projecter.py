@@ -44,6 +44,7 @@ def get_project(data, DG, unique = False):
 	c = ""
 	back = False
 	while c != "end":
+		dict = {}
 		c= input("project: ")
 		if c == "end":
 			continue
@@ -55,7 +56,6 @@ def get_project(data, DG, unique = False):
 		out_id = input("OutID: ")
 		
 		if in_id == "all" and out_id == "all":
-
 			for node in roots:
 				s = set()
 				for out in leaves:
@@ -80,6 +80,7 @@ def get_project(data, DG, unique = False):
 				else:
 					break
 			if back:
+				back = False
 				continue
 
 			in_node = data[in_id]
@@ -105,6 +106,7 @@ def get_project(data, DG, unique = False):
 				else:
 					break
 			if back:
+				back = False
 				continue
 
 			out_node = data[out_id]
@@ -132,6 +134,7 @@ def get_project(data, DG, unique = False):
 				else:
 					break
 			if back:
+				back = False
 				continue
 
 			out_node = data[out_id]
@@ -151,7 +154,7 @@ def get_project(data, DG, unique = False):
 		if unique:
 			total_set = set([m for n in dict.values() for m in n.nodes()])
 			subG = DG.subgraph(total_set)
-			print_graph(subG)
+			print_graph(subG, unique = True)
 		else:
 			for n in dict.keys():
 				if len(dict[n].nodes()) != 0:
