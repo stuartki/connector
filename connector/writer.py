@@ -148,16 +148,8 @@ def writer(topic, data = 0, init_description = ""):
 		if future_temp == "end":
 			continue
 		if future_temp[:2] == "ls":
-			try:
-				l = int(future_temp[2:])
-				if l > len(data):
-					l = len(data)
-			except:
-				l = len(data)
-			for n in range(len(data)-l, len(data)):
-				if isinstance(data[n], int):
-					continue
-				print(str(data[n].id) + ": " + str(data[n].title))
+			if future_temp[:2] == "ls":
+				ls(future_temp, data)
 			continue
 		if future_temp == "suc":
 			for n in mostPopularSuc(data, DG, limit = 10):
