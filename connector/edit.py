@@ -3,7 +3,8 @@ import sys
 from Node import Node
 from reader import reader
 import json
-from searcher import ls, searcher
+from searcher import ls, searcher, get
+from writer import isint
 
 def writeToFile(file, data):
 	open(file, "w").close()
@@ -22,6 +23,21 @@ def edit(data):
 		
 		if content == "end":
 			continue
+		if content[:2] == "ls":
+			ls(content, data)
+			continue
+
+		if content == "search":
+			se = ""
+			while se != "end":
+				se = input("search: ")
+				if se == "end":
+					continue
+				if isint(se):
+					from mapper import reload
+					get(data, reload(data), id = int(se))
+				for n in searcher(se, data):
+					print(str(n.id) + ": " + n.title)
 		try:
 			id = int(content)
 		except ValueError:
@@ -58,10 +74,20 @@ def edit(data):
 						print("\npast: " + str(cur_node.past) + "\n")
 						ls(p, data)
 						continue
-					ind = p[0]
-					if ind not in ["+", "-"]:
-						searcher(ind, data)
+					
+					if p == "search":
+						se = ""
+						while se != "end":
+							se = input("search: ")
+							if se == "end":
+								continue
+							if isint(se):
+								from mapper import reload
+								get(data, reload(data), id = int(se))
+							for n in searcher(se, data):
+								print(str(n.id) + ": " + n.title)
 					try:
+						ind = p[0]
 						newID = int(p[1:])
 					except:
 						print("INVALID ID")
@@ -87,11 +113,20 @@ def edit(data):
 						print("\nfuture: " + str(cur_node.future) + "\n")
 						ls(p, data)
 						continue
-					ind = p[0]
-					if ind not in ["+", "-"]:
-						searcher(ind, data)
-						continue
+					
+					if p == "search":
+						se = ""
+						while se != "end":
+							se = input("search: ")
+							if se == "end":
+								continue
+							if isint(se):
+								from mapper import reload
+								get(data, reload(data), id = int(se))
+							for n in searcher(se, data):
+								print(str(n.id) + ": " + n.title)
 					try:
+						ind = p[0]
 						newID = int(p[1:])
 					except:
 						print("INVALID ID")
