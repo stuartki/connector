@@ -22,11 +22,14 @@ import networkx as nx
 # 			pastNodes.append(x.id)
 # 	return pastNodes
 
-def ls(i, data):
-	try: 
-		l = int(i[2:])
-	except:
-		l = int(len(data)/10)
+def ls(i, data, limit = -1):
+	if limit > 0:
+		l = limit
+	else:
+		try: 
+			l = int(i[2:])
+		except:
+			l = int(15)
 	if l > len(data):
 		l = len(data)
 	for n in range(len(data)-l, len(data)):
