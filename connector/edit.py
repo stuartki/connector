@@ -3,6 +3,7 @@ import sys
 from Node import Node
 from reader import reader
 import json
+from searcher import ls, searcher
 
 def writeToFile(file, data):
 	open(file, "w").close()
@@ -21,7 +22,11 @@ def edit(data):
 		
 		if content == "end":
 			continue
-		id = int(content)
+		try:
+			id = int(content)
+		except ValueError:
+			print("INVALID ID")
+			continue
 		
 		cur_node = data[id]
 		cur = ""
@@ -32,23 +37,36 @@ def edit(data):
 			if cur == "ls":
 				cur_node.printNode()
 			if cur == "description":
-				descrNew = input("\nid: " + str(id) + "\n" + str(cur_node.description) + "\n: ")
-				if descrNew == "end":
+
+				new_descr = input("\n" + str(id) + ".description: " + str(cur_node.description) + "\n")
+				if new_descr == "end":
 					continue
 				else:
-					cur_node.description = descrNew
-					print("\nid: " + str(id) + "\n" + str(cur_node.description))
+					if "+a" == cur[:-2]:
+				 		new_descr = cur_node.description + ". " + new_descr
+					cur_node.description = new_descr
+					print("\n" + str(id) + ".description: " + str(cur_node.description) + "\n")
 			if cur == "past":
 				p = ""
+				print("\npast: " + str(cur_node.past) + "\n")
 				while p != "end":
 
-					p = input("\nid: " + str(id) + "\n" + ", "+ str(cur_node.past) + "\n\n: ")
+					p = input()
 					if p == "end":
 						continue
-
-					
+					if p[:2] == "ls":
+						print("\npast: " + str(cur_node.past) + "\n")
+						ls(p, data)
+						continue
 					ind = p[0]
-					newID = int(p[1:])
+					if ind not in ["+", "-"]:
+						searcher(ind, data)
+					try:
+						newID = int(p[1:])
+					except:
+						print("INVALID ID")
+						p = input("\npast: " + str(cur_node.past) + "\n")
+						continue
 					
 					if ind == "-":
 						cur_node.past.remove(newID)
@@ -56,20 +74,29 @@ def edit(data):
 					if ind == "+":
 						cur_node.past.append(newID)
 						data[newID].future.append(id)
-					print("\nid: " + str(id) + "\n" + ", " + str(cur_node.past))
 			if cur == "future":
 
 				p = ""
+				print("\nfuture: " + str(cur_node.future) + "\n")
 				while p != "end":
 
-					p = input("\nid: " + str(id) + "\n" + ", "  + str(cur_node.future) + "\n\n: ")
+					p = input()
 					if p == "end":
 						continue
-
-				
+					if p[:2] == "ls":
+						print("\nfuture: " + str(cur_node.future) + "\n")
+						ls(p, data)
+						continue
 					ind = p[0]
-					newID = int(p[1:])
-					print(newID)
+					if ind not in ["+", "-"]:
+						searcher(ind, data)
+						continue
+					try:
+						newID = int(p[1:])
+					except:
+						print("INVALID ID")
+						p = input("\nfuture: " + str(cur_node.future) + "\n")
+						continue
 					
 					if ind == "-":
 						cur_node.future.remove(newID)
@@ -77,7 +104,6 @@ def edit(data):
 					if ind == "+":
 						cur_node.future.append(newID)
 						data[newID].past.append(id)
-					print("\nid: " + str(id) + "\n" + ", " + str(cur_node.future))
 			if cur == "related":
 				pa = ""
 				while pa != "end":
@@ -109,14 +135,16 @@ def edit(data):
 					if p[0] == "+":
 						cur_node.keywords.append(p[1])	
 					print("\nid: " + str(id) + "\n" + ", ".join(cur_node.keywords))
-			if cur == "title":
-
-				titleNew = input("\nid: " + str(id) + "\n" + cur_node.title + "\n\n: ")
+			if "title" in cur:
+				
+				titleNew = input("\n" + str(id) + ".title: " + cur_node.title + "\n")
 				if titleNew == "end":
 					continue
 				else:
+					if "+a" == cur[:-2]:
+						titleNew = cur_node.title + ". " + titleNew
 					cur_node.title = titleNew	
-				print("\nid: " + str(id) + "\n" + cur_node.title)
+				print("\n" + str(id) + ".title: " + cur_node.title + "\n")
 # 			if cur == "type":
 # 
 # 				typeNew = input("\nid: " + str(id) + "\n" + cur_node.type + "\n\n: ")
