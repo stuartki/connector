@@ -4,7 +4,14 @@ from Node import Node
 from reader import reader
 import json
 from searcher import ls, searcher, get
-from writer import isint
+
+
+def isint(s):
+	try:
+		int(s)
+		return True
+	except ValueError:
+		return False
 
 def writeToFile(file, data):
 	open(file, "w").close()
@@ -38,6 +45,7 @@ def edit(data):
 					get(data, reload(data), id = int(se))
 				for n in searcher(se, data):
 					print(str(n.id) + ": " + n.title)
+			continue
 		try:
 			id = int(content)
 		except ValueError:
@@ -86,6 +94,7 @@ def edit(data):
 								get(data, reload(data), id = int(se))
 							for n in searcher(se, data):
 								print(str(n.id) + ": " + n.title)
+						continue
 					try:
 						ind = p[0]
 						newID = int(p[1:])
@@ -97,9 +106,11 @@ def edit(data):
 					if ind == "-":
 						cur_node.past.remove(newID)
 						data[newID].future.remove(id)
+						print("past: " + str(cur_node.past) + "\n")
 					if ind == "+":
 						cur_node.past.append(newID)
 						data[newID].future.append(id)
+						print("past: " + str(cur_node.past) + "\n")
 			if cur == "future":
 
 				p = ""
@@ -125,20 +136,23 @@ def edit(data):
 								get(data, reload(data), id = int(se))
 							for n in searcher(se, data):
 								print(str(n.id) + ": " + n.title)
+						continue
 					try:
 						ind = p[0]
 						newID = int(p[1:])
 					except:
 						print("INVALID ID")
-						p = input("\nfuture: " + str(cur_node.future) + "\n")
+						print("\nfuture: " + str(cur_node.future) + "\n")
 						continue
 					
 					if ind == "-":
 						cur_node.future.remove(newID)
 						data[newID].past.remove(id)
+						print("future: " + str(cur_node.future) + "\n")
 					if ind == "+":
 						cur_node.future.append(newID)
 						data[newID].past.append(id)
+						print("future: " + str(cur_node.future) + "\n")
 			if cur == "related":
 				pa = ""
 				while pa != "end":
