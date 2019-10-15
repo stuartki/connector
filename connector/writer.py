@@ -13,6 +13,7 @@ from searcher import searcher, ls, get
 import json
 from network import mostPopularSuc, mostPopularPred, init,	draw_all, cleanPred, most_degree_centrality, labeler
 from projecter import get_project, print_graph, branch
+
 def isint(s):
 	try:
 		int(s)
@@ -115,6 +116,17 @@ def writer(topic, data = 0, init_description = ""):
 		if past_temp[:2] == "ls":
 			ls(past_temp, data)
 			continue
+		if past_temp == "search":
+			se = ""
+			while se != "end":
+				se = input("search: ")
+				if se == "end":
+					continue
+				if isint(se):
+					get(data, DG, id = int(se))
+				for n in searcher(se, data):
+					print(str(n.id) + ": " + n.title)
+			continue
 		if past_temp == "suc":
 			for n in mostPopularSuc(data, DG, limit = 10):
 				print(str(n.id) + ": " + n.title)
@@ -129,10 +141,13 @@ def writer(topic, data = 0, init_description = ""):
 			continue
 		if past_temp == "project":
 			get_project(data, DG)
+			continue
 		if past_temp == "branch":
 			branch(data, DG)
+			continue
 		if past_temp == "get":
 			get(data, DG)
+			continue
 		if isint(past_temp):
 			result = int(past_temp)
 			back.append(result)
@@ -150,6 +165,17 @@ def writer(topic, data = 0, init_description = ""):
 		if future_temp[:2] == "ls":
 			if future_temp[:2] == "ls":
 				ls(future_temp, data)
+			continue
+		if future_temp == "search":
+			se = ""
+			while se != "end":
+				se = input("search: ")
+				if se == "end":
+					continue
+				if isint(se):
+					get(data, DG, id = int(se))
+				for n in searcher(se, data):
+					print(str(n.id) + ": " + n.title)
 			continue
 		if future_temp == "suc":
 			for n in mostPopularSuc(data, DG, limit = 10):
