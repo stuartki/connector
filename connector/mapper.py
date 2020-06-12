@@ -20,6 +20,12 @@ def reload(data):
 	#clean graph initially
 	DG = cleanPred(data, DG)
 	return DG
+
+def dprint(data):
+	for n in data:
+		if isinstance(n, int):
+			continue
+		print(str(n.id) + ": " + str(n.title))
 	
 def interface(init_topic = ""):
 	from mapper import reload
@@ -155,6 +161,11 @@ def interface(init_topic = ""):
 
 			if start == "get":
 				get(data, DG)
+
+			if start == "axioms":
+				leaves = [n for n,d in DG.out_degree() if d == 0]
+				print(len(leaves))
+				dprint(leaves)
 
 			if start == "cycle":
 				isCycle(DG)
