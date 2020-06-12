@@ -115,23 +115,23 @@ def most_degree_centrality(DG, limit = 0):
 		d_central = d_central[:limit]
 	return d_central
 
-#organizing in tiers
-def tier(DG):
-	shortPath = nx.shortest_path(DG)
-	tierDict = {}
-	for k, v in shortPath.items():
-		sourceDict = {}
-		for key, value in v.items():
+#organizing in tiers 20200406 OBSOLETE
+# def tier(DG):
+# 	shortPath = nx.shortest_path(DG)
+# 	tierDict = {}
+# 	for k, v in shortPath.items():
+# 		sourceDict = {}
+# 		for key, value in v.items():
 			
-			if len(value) in sourceDict.keys():
-				va = sourceDict[len(value)]
-				va.append(key)
-				sourceDict[len(value)] = va
-			else:
-				sourceDict[len(value)] = [key]
+# 			if len(value) in sourceDict.keys():
+# 				va = sourceDict[len(value)]
+# 				va.append(key)
+# 				sourceDict[len(value)] = va
+# 			else:
+# 				sourceDict[len(value)] = [key]
 
-		tierDict[k] = sourceDict
-	return tierDict
+# 		tierDict[k] = sourceDict
+# 	return tierDict
 
 #deleting edges that connect node to closer predecessor
 def cleanPred(data, graph):
