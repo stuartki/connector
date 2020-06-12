@@ -90,7 +90,7 @@ def file_finder():
 
 def pdf_loader(path):
     import textract
-    text = textract.process(path)
+    text = textract.process(path, encoding='utf-8')
     pdf = text.decode('utf-8').replace('\n', ' ').split('. ')
     return pdf
 
@@ -103,11 +103,11 @@ def txt_loader(path):
     data = [n[:-1] for n in tokenizer.tokenize(data)]
     return data
 
+# goes through loaded text data and is a document walker to load Node data directly from file
 def term_text_editor(data, init_index = 0, from_topic = ""):
     from writer import writer
     
     from searcher import searcher
-    from mapper import interface
     
     i = ""
     
