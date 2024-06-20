@@ -5,6 +5,3 @@ tester.py
 .vscode
 .DS_store
 connector_2.x
-bin
-lib
-pyvenv.cfg
